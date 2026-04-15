@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>App</title>
+</head>
+<body>
+
+  <!-- <p>Todo List Practice</p>
+  <input placeholder="Todo name" class="js-input">
+  <input type="date" class="js-date-input"> 
+  <button onclick="
+  addTodo();
+  ">Add</button>
+  <div class="js-show-result"></div> -->
+
+  <!-- <button onclick="
+
+  clickButton();
+  
+  " class="js-button">Start</button>
+
+  <button onclick="
+
+  displayMessage();
+  
+  ">Add to cart</button>
+  <p class="js-message"></p> -->
+
+  <!-- <button onclick="
+
+  messages++;
+  
+  ">Add</button>
+
+  <button onclick="
+
+  messages--;
+  
+  ">Remove</button> -->
+
+   <p>Rock Paper Scissors</p>
+
+      <button class="js-rock">Rock</button>
+
+      <button class="js-paper">Paper</button>
+
+      <button class="js-scissor">Scissors</button> 
+
+      <p class="js-result"></p>
+      <p class="js-move"></p>
+
+      <p class="js-score">Wins: 0, Losses: 0, Ties: 0</p>
+
+
+      <button class="js-reset">Reset Score</button>
+
+      <button class="js-autoplay">Auto play</button>
+
+      <p class="js-message"></p>
+
+
+
+
+  <script>
+
+    // function removeEgg(foods){
+    //   let count = 0;
+
+    //   return foods.filter((food) => {
+        
+    //     if(food === 'egg' && count < 2){
+    //       count++;
+    //       return false;
+    //     }else{
+    //       return true;
+    //     }
+    //   });
+
+    // }
+
+    // console.log(removeEgg(['egg','apple','egg','egg','ham']));
+
+    // const multiply = (no1,no2) => no1 * no2;
+
+    // console.log(multiply(2,2));
+
+    
+
+    // function countPositive(nums){
+
+    //   let count = 0;
+     
+
+    // nums.forEach((value) => {
+
+    //   if(value > 0){
+    //     count++;
+    //   }
+    // });
+    // console.log(count);
+      
+    // }
+
+    // countPositive([1,-3,5]);
+
+    // function addNum(array, num){
+
+    //   return array.map((value) => value + num);
+
+      
+    // }
+
+    // console.log(addNum([1,2,3],2));
+
+    document.querySelector('.js-rock').addEventListener('click', () => {
+      
+      getResult('Rock');
+
+    });
+
+    document.querySelector('.js-paper').addEventListener('click', () => {
+      
+      getResult('Paper');
+      
+    });
+
+    document.querySelector('.js-scissor').addEventListener('click', () => {
+      
+      getResult('Scissors');
+      
+    });
+
+    document.querySelector('.js-autoplay').addEventListener('click', () => {
+      autoplay();
+    });
+
+     document.querySelector('.js-reset').addEventListener('click', () => {
+      showMessage();
+    });
+
+    document.body.addEventListener('keydown', (event) => {
+
+      if(event.key === 'a'){
+        autoplay();
+      }else if(event.key === 'Backspace'){
+        showMessage();
+      }
+    
+    });
+
+    function showMessage(){
+         document.querySelector('.js-message').innerHTML = 'Are you sure you want to reset the score? <button class="js-yes">Yes</button> <button class="js-no">No</button>';
+
+      document.querySelector('.js-yes').addEventListener('click',() => {
+
+        resetScore();
+        hiddenResultMessage();
+
+      });
+
+
+      document.querySelector('.js-no').addEventListener('click',() => {
+
+        hiddenResultMessage();
+
+      });
+      
+
+    }
+
+    function hiddenResultMessage(){
+
+      document.querySelector('.js-message').innerHTML = '';
+
+    }
+
+
+
+    function resetScore(){
+
+      score.wins = 0;
+      score.loses = 0;
+      score.tie = 0;
+      localStorage.removeItem('score');
+      updateScoreElement();
+
+    }
+
+
+    let isPlay = false;
+    let intervalId;
+
+    function autoplay(){
+      
+      
+      if(!isPlay){
+        
+        intervalId = setInterval(() => {
+          const playerMove = pickComputerMove();
+
+          getResult(playerMove);
+
+      },1000);
+      isPlay = true;
+      document.querySelector('.js-autoplay').innerHTML = 'Stop Playing';
+
+      }else{
+
+        clearInterval(intervalId);
+        isPlay = false;        
+        document.querySelector('.js-autoplay').innerHTML = 'Auto Play';
+        
+
+      }
+     
+    }
+
+
+    function pickComputerMove(){
+
+      const ranNumber = Math.random();
+      let move = '';
+
+      if(ranNumber < 1/3){
+        move = 'Rock';
+      }else if(1/3 < ranNumber && ranNumber < 2/3){
+        move = 'Paper';
+      }else{
+        move = 'Scissors';
+      }
+
+      return move;
+
+    }
+
+    let score = JSON.parse(localStorage.getItem ('score')) || {
+      wins: 0,
+      loses: 0,
+      tie: 0
+    
+    };
+    updateScoreElement();
+
+    function getResult(playerMove){
+
+       let move = pickComputerMove();
+       let result = '';
+
+      if(playerMove === 'Rock'){
+
+        if(move === 'Rock'){
+          result = 'Tie';
+        }else if(move === 'Paper'){
+          result = 'you lose';
+        }else{
+          result = 'you win';
+        }
+      }else if(playerMove === 'Paper'){
+
+        if(move === 'Rock'){
+        result = 'you win';
+        }else if(move === 'Paper'){
+          result = 'Tie';
+        }else{
+          result = 'you lose';
+        }
+      }else{
+        if(move === 'Rock'){
+        result = 'you lose';
+        }else if(move === 'Paper'){
+          result = 'you win';
+        }else{
+          result = 'Tie';
+        }
+      }
+
+      if(result === 'you win'){
+        score.wins +=1;
+      }else if(result === 'you lose'){
+        score.loses +=1;
+      }else if(result === 'Tie'){
+        score.tie +=1;
+      }
+
+      localStorage.setItem('score',JSON.stringify(score));
+
+      updateScoreElement();
+
+      document.querySelector('.js-result').innerHTML = `${result}`;
+
+      document.querySelector(`.js-move`).innerHTML = `you ${playerMove} - ${move} computer`;
+      
+//       alert(`you Picked ${playerMove} Computer Picked ${move} ${result}
+//  wins:${score.wins} loses:${score.loses} ties:${score.tie}`);
+
+
+    }
+
+    function updateScoreElement(){
+
+      document.querySelector('.js-score').innerHTML = `Wins: ${score.wins}, Losses: ${score.loses} Ties: ${score.tie}`
+
+    }
+
+  // let messages = 1;
+
+
+  // setInterval(function(){
+
+  //   if(document.title === 'App'){
+  //       document.title = `(${messages}) new message`;
+      
+  //   }else{
+  //     document.title = 'App';
+  //   }
+
+  // },1000);
+  
+
+
+
+//    let timeoutId;
+
+// function displayMessage() {
+//   const messageElement = document.querySelector('.js-message');
+//   messageElement.innerHTML = 'Added';
+
+//   clearTimeout(timeoutId);   // Cancel previous timer
+
+//   timeoutId = setTimeout(function() {
+//     messageElement.innerHTML = '';
+//   }, 2000);
+// }
+
+
+    // let isClicked = false;
+
+    // function clickButton(){
+
+    //   const buttonElement =  document.querySelector('.js-button');
+      
+    //   if(!isClicked){
+    //     setTimeout(function(){
+    //       buttonElement.innerHTML = 'Finished!';
+    //       isClicked = true;
+    //     },1000);
+    //     buttonElement.innerHTML = 'Loading...'
+    //   }else{
+
+    //     document.querySelector('.js-button').innerHTML = 'Start';
+    //     isClicked = false;
+
+    //   }
+    // }
+
+    // const function1 = function(){
+    //   console.log(2+3);
+    // }
+
+    // function1();
+
+
+    // function runTwice(fun){
+
+    //   fun();
+
+    // }
+
+    // runTwice(function(){
+    //   console.log('12b');
+    // });
+
+    // const todoList = JSON.parse(localStorage.getItem('todoList')) || [];
+
+    //  renderTodo();
+
+    //  function renderTodo(){
+
+    //    let todoListHtml = '';
+
+    //    todoList.forEach(function(todoObject,index){
+
+    //     const {name, date} = todoObject;
+
+    //     const html = `<p>
+    //       ${name} ${date}
+    //       <button onclick="
+
+    //       todoList.splice(${index}, 1);
+
+    //       renderTodo();
+    //       saveToStorage();
+      
+    //       ">delete</button>
+          
+    //       </p>`;
+
+    //       todoListHtml +=html;
+
+    //    });
+
+    //    document.querySelector('.js-show-result').innerHTML = todoListHtml;
+
+
+
+      //  for(let i=0; i<todoList.length; i++){
+
+      //   const todoObject = todoList[i];
+
+      //   const {name, date} = todoObject;
+
+      //   const html = `<p>
+      //     ${name} ${date}
+      //     <button onclick="
+
+      //     todoList.splice(${i}, 1);
+
+      //     renderTodo();
+      //     saveToStorage();
+      
+      //     ">delete</button>
+          
+      //     </p>`;
+
+      //     todoListHtml +=html;
+
+      // }
+      // document.querySelector('.js-show-result').innerHTML = todoListHtml;
+
+      
+    //  }
+
+    //  function addTodo(){
+
+    //    const inputElement = document.querySelector('.js-input');
+    //    const dateInputElement = document.querySelector('.js-date-input');
+
+    //    const name = inputElement.value;
+    //    const date = dateInputElement.value;
+
+    //    todoList.push({
+    //     // name : name,
+    //     // date : date
+    //     //can be do this in shorthand property way since name and the value are same
+    //     name,
+    //     date
+    //    });
+
+    //    renderTodo();
+    //    saveToStorage();
+
+    //    inputElement.value = '';
+
+
+    //  }
+
+    //  function saveToStorage(){
+
+    //   localStorage.setItem('todoList',JSON.stringify(todoList));
+
+    //  }
+
+
+  </script>
+  
+</body>
+</html>

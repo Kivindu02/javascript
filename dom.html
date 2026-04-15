@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dom</title>
+</head>
+<body>
+
+  <!-- <p>YouTube Subscribe Button</p>
+  <button onclick="
+
+  function1();
+  
+  " class="js-subscribe">Subscribe</button> -->
+
+  <p>Rock Paper Scissors</p>
+
+      <button onclick="
+       
+       getResult('Rock');
+
+      ">Rock</button>
+
+      <button onclick="
+
+        getResult('Paper');
+      
+      " >Paper</button>
+
+      <button onclick="
+       
+       getResult('Scissors');
+      
+      ">Scissors</button> 
+
+      <p class="js-result"></p>
+      <p class="js-move"></p>
+
+      <p class="js-score">Wins: 0, Losses: 0, Ties: 0</p>
+
+
+      <button onclick="
+
+      score.wins = 0;
+      score.loses = 0;
+      score.tie = 0;
+      localStorage.removeItem('score');
+      updateScoreElement();
+       
+      ">Reset Score</button>
+<!-- 
+      <p>Amazon Shipping Calculator</p>
+      <p>Orders under $40 = +$10 shipping.</p>
+      <p>Orders over $40 = FREE shipping.</p>
+      <input placeholder="Cost of order" class="js-input" onkeydown="onKeyDown(event);">
+      <button onclick=" CalculateTotal(); ">Calculate</button>
+      <p class="js-cost-show"></p> -->
+
+      <!-- <button>9a</button>
+      <button onclick="
+      
+      const btnElemnt = document.querySelector('.js-second-btn');
+
+      if(btnElemnt.innerHTML === '9b'){
+        btnElemnt.innerHTML = '9b done';
+      }else{
+        btnElemnt.innerHTML = '9b';
+      }     
+      " class="js-second-btn">9b</button> -->
+<!-- 
+      <button onclick="showResult('heads');">heads</button>
+      <button onclick="showResult('tails')">tails</button>
+
+      <p class="js-result"></p> -->
+      <!-- <input placeholder="Name" class="js-input" onkeyup="
+
+      onKeyDown(event);
+       
+      ">
+      <button onclick="showName();">Submit</button>
+      <p class="js-result"></p> -->
+
+
+
+
+
+
+  <script>
+
+    // function showName(){
+    //   const inputElement = document.querySelector('.js-input').value;
+
+    //   document.querySelector('.js-result').innerHTML = `Your name is: ${inputElement}`;
+    // }
+
+    // function onKeyDown(event){
+    //   if(event.key){
+    //     showName();
+    //   }
+    // }
+
+    // function showResult(userChoise){
+
+    //   document.querySelector('.js-result').innerHTML = `You chose: ${userChoise}`;
+
+      
+    // }
+
+    //console.log(document.querySelector('button'));
+
+    
+
+    // function CalculateTotal(){
+    //   const inputElement = document.querySelector('.js-input');
+    //   let cost = Number(inputElement.value);
+
+    //   if(cost < 50){
+    //     cost
+    //     cost += 10;
+    //   }else{
+    //     cost;
+    //   }
+
+    //   document.querySelector('.js-cost-show').innerHTML = `$${cost}`;
+      
+    // }
+
+    // function onKeyDown(event){
+    //   if(event.key === 'Enter'){
+    //     CalculateTotal();
+    //   }
+    // }
+
+    // function function1(){
+
+    //   const buttonEle = document.querySelector('.js-subscribe');
+
+    //   if(buttonEle.innerHTML === 'Subscribe'){
+    //     buttonEle.innerHTML = 'Subscribed';
+    //   }else{
+    //     buttonEle.innerHTML = 'Subscribe';
+    //   }
+      
+    // }
+
+      function pickComputerMove(){
+
+      const ranNumber = Math.random();
+      let move = '';
+
+      if(ranNumber < 1/3){
+        move = 'Rock';
+      }else if(1/3 < ranNumber && ranNumber < 2/3){
+        move = 'Paper';
+      }else{
+        move = 'Scissors';
+      }
+
+      return move;
+
+    }
+
+    let score = JSON.parse(localStorage.getItem ('score')) || {
+      wins: 0,
+      loses: 0,
+      tie: 0
+    
+    };
+    updateScoreElement();
+
+    function getResult(playerMove){
+
+       let move = pickComputerMove();
+       let result = '';
+
+      if(playerMove === 'Rock'){
+
+        if(move === 'Rock'){
+          result = 'Tie';
+        }else if(move === 'Paper'){
+          result = 'you lose';
+        }else{
+          result = 'you win';
+        }
+      }else if(playerMove === 'Paper'){
+
+        if(move === 'Rock'){
+        result = 'you win';
+        }else if(move === 'Paper'){
+          result = 'Tie';
+        }else{
+          result = 'you lose';
+        }
+      }else{
+        if(move === 'Rock'){
+        result = 'you lose';
+        }else if(move === 'Paper'){
+          result = 'you win';
+        }else{
+          result = 'Tie';
+        }
+      }
+
+      if(result === 'you win'){
+        score.wins +=1;
+      }else if(result === 'you lose'){
+        score.loses +=1;
+      }else if(result === 'Tie'){
+        score.tie +=1;
+      }
+
+      localStorage.setItem('score',JSON.stringify(score));
+
+      updateScoreElement();
+
+      document.querySelector('.js-result').innerHTML = `${result}`;
+
+      document.querySelector(`.js-move`).innerHTML = `you ${playerMove} - ${move} computer`;
+      
+      alert(`you Picked ${playerMove} Computer Picked ${move} ${result}
+ wins:${score.wins} loses:${score.loses} ties:${score.tie}`);
+
+
+    }
+
+    function updateScoreElement(){
+
+      document.querySelector('.js-score').innerHTML = `Wins: ${score.wins}, Losses: ${score.loses} Ties: ${score.tie}`
+
+    }
+    
+
+    
+
+
+
+
+
+  </script>
+  
+</body>
+</html>

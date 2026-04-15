@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Document</title>
+</head>
+<body>
+
+  <script>
+
+      //  const stringArray = ['kivindu', 'search', 'search'];
+
+      //  stringArray.re
+
+      // let index = -1;
+
+      // for(let i=0; i<stringArray.length; i++){
+      //   if(stringArray[i] === 'search'){
+      //     index = i;
+      //     break; 
+      //   }      
+        
+      // }
+
+      // console.log(index);
+
+      
+
+      // console.log(findIndex(['green','red','blue','red'],'yellow'));
+
+      // function removeEgg(foods){
+      //   const withoutEgg = [];
+      //   let count = 0;
+
+      //   foods.reverse();
+
+      //   for(let i=0; i<foods.length; i++){
+      //     if(foods[i] === 'egg' && count<2){
+            
+      //       count++;
+      //       continue;
+      //     }
+          
+      //     withoutEgg.push(foods[i]);
+          
+      //   }
+      //   withoutEgg.reverse();
+      //   console.log(withoutEgg);
+      // }
+
+      // removeEgg(['egg','apple','egg','egg','ham']);
+
+      
+      // function removeEgg(foods){
+
+      //   const copyFood = foods.slice();
+      //   const reveseCopy = copyFood.reverse();
+
+      //   const withoutEgg = [];
+      //   let count = 0;
+
+
+      //   for(let i=0; i<reveseCopy.length; i++){
+      //     if(reveseCopy[i] === 'egg' && count<2){
+            
+      //       count++;
+      //       continue;
+      //     }
+          
+      //     withoutEgg.push(reveseCopy[i]);
+          
+      //   }
+      //   withoutEgg.reverse();
+      //   console.log(withoutEgg);
+      // }
+
+      //  removeEgg(['egg','apple','egg','egg','ham']);
+
+      // function fizzBuzz(array){
+
+      //   for(let i=0; i<array.length; i++){
+      //     if((array[i] % 3 === 0) && (array[i] % 5 === 0)){
+      //       array[i] = 'FizzBuzz';
+      //     }else if(array[i] % 3 === 0){
+      //       array[i] = 'Fizz';
+      //     }
+      //     else if((array[i] % 5 === 0)){
+      //       array[i] = 'Buzz';
+      //     }
+      //   }
+
+      //   console.log(array);
+
+      // }
+
+      // fizzBuzz([1,2,3,4,5,6,7,8,9,10,15]);
+
+      function findIndex(array, word){
+
+      for(let i=0; i<array.length; i++){
+
+        if(array[i] === word){
+          return 1; 
+        }      
+        
+      }
+
+      return -1;
+
+      }
+
+      function unique(array){
+
+        const result = [];
+
+        for(let i=0; i<array.length; i++){
+          const word = array[i];
+
+           if(findIndex(result,word) === -1){
+           result.push(word);
+         }
+
+        }
+      
+        return result;
+
+
+      }
+
+      console.log(unique(['green', 'red', 'blue', 'red']));
+
+      
+
+      
+
+
+  </script>
+  
+</body>
+</html>
